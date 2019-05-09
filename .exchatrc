@@ -1,0 +1,6 @@
+{
+  "intentsPath": "./intents",
+  "intentsFileExtension": "*.intent.js",
+  "intentsFilePrefix": "",
+  "botDefinitionExportPath": "/exports"
+}
