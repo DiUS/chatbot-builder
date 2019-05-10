@@ -1,7 +1,4 @@
-const intentBuilder = require('./src/builders/intentBuilder');
+const botBuilder = require('./src/builders/botBuilder');
 
-// run the intentBuilder script
-(async() => {
-  const intents = await intentBuilder.runBuild();
-  console.log('intents: ', intents);
-})();
+// run the botBuilder script
+botBuilder.runBuild('matt-bot');

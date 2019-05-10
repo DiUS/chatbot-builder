@@ -1,12 +1,13 @@
 const vm = require('vm');
 const { withIntent, utterance, utterances, utteranceWithPattern, responseMessage } = require('../modules').intentModule;
 const FileHelper = require('../helpers/fileHelper');
+const configuration = require('../config');
 
 const runBuild = async () => {
   const allIntents = [];
+  const config = await configuration();
+  
   const fileHelper = new FileHelper();
-  const configJSON = await fileHelper.readFileFromPath('.exchatrc'); // TODO: better to set absolute path later
-  const config = JSON.parse(configJSON);
   const intentFilesDirectory = `${config.intentsPath}/${config.intentsFileExtension}`; 
   const intentsData = await fileHelper.loadFilesFromDirectory(intentFilesDirectory);
 

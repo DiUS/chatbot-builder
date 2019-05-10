@@ -43,6 +43,30 @@ class FileHelper {
       })
     });
   }
+
+  async writeToFile(botJSON, fileDirectory, filename) {
+    const exportUrl = `${__dirname}/..${fileDirectory}`;
+    const response = new Promise((resolve, reject) => {
+      fs.mkdir(exportUrl, { recursive: true },  async (err, data) => {
+        if (err) {
+          reject(err);
+        }
+  
+        const nowTime = Date.now();
+        const outputUrl = `${exportUrl}/${filename}_${nowTime}.json`;
+        await fs.writeFile(outputUrl, JSON.stringify(botJSON), err => {
+          if (err) {
+            reject(err)
+          }
+          
+          console.log(`${filename}_${nowTime}.json has been generated successfully!`);
+          resolve(outputUrl);
+        }); 
+      })
+    });
+
+    return await response;
+  }
 }
 
 module.exports = FileHelper;

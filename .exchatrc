@@ -1,6 +1,10 @@
 {
   "intentsPath": "./intents",
   "intentsFileExtension": "*.intent.js",
-  "intentsFilePrefix": "",
-  "botDefinitionExportPath": "/exports"
+  "intentsFilePrefix": "SmallTak_",
+  "slotsPath": "./slots",
+  "slotsFileExtension": "*.slot.js",
+  "slotsFilePrefix": "",
+  "defaultChatbotName": "dius-chatbot",
+  "botDefinitionExportPath": "/../exports"
 }

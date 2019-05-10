@@ -19,7 +19,7 @@ const botModule = (function() {
       bot = {...botModel, name};
 
       if (cb) {
-        cb(bot);
+        cb();
       }
 
       intentBuilder(bot);
