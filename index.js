@@ -1,4 +1,7 @@
-const intentBuilder = require('./intentBuilder');
+const intentBuilder = require('./src/builders/intentBuilder');
 
 // run the intentBuilder script
-intentBuilder.runBuild();
+(async() => {
+  const intents = await intentBuilder.runBuild();
+  console.log('intents: ', intents);
+})();
