@@ -13,7 +13,7 @@ const intentModule = (function() {
 
     withIntent: (name, cb = null) => {
       if (!name) {
-        throw 'Intent name can\'t be empty';
+        throw new Error('Intent name can\'t be empty');
       }
 
       // TODO: It is better to load model from external
@@ -39,7 +39,7 @@ const intentModule = (function() {
 
     utterance: str => {
       if (!str) {
-        throw 'Utterance can\'t be empty';
+        throw new Error('Utterance can\'t be empty');
       }
 
       if (intent.sampleUtterances && !intent.sampleUtterances.indexOf(str) > -1) {
@@ -49,7 +49,7 @@ const intentModule = (function() {
 
     utterances: arr => {
       if (!Array.isArray(arr)) {
-        throw 'Your input needs to be a valid array';
+        throw new Error('Your input needs to be a valid array');
       }
 
       if (intent.sampleUtterances) {
@@ -66,7 +66,7 @@ const intentModule = (function() {
 
     responseMessage: (response, groupNumber = 1) => {
       if (!response) {
-        throw 'Your response can\'t be empty';
+        throw new Error('Your response can\'t be empty');
       }
 
       if (intent.conclusionStatement && intent.conclusionStatement.messages) {
@@ -86,7 +86,7 @@ const intentModule = (function() {
       return {
         withResponseCard: content => {
           if (!content) {
-            throw 'Your responseCard can\'t be empty';
+            throw new Error('Your responseCard can\'t be empty');
           }
   
           if (intent.conclusionStatement) {

@@ -7,7 +7,7 @@ const botModule = (function() {
   const app = {
     buildBot: (name, cb = null) => {
       if (!name) {
-        throw 'Bot name can\'t be empty';
+        throw new Error('Bot name can\'t be empty');
       }
       
       // TODO: add more fields to botModel
