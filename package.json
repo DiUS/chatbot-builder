@@ -1,5 +1,5 @@
 {
-  "name": "exchat",
+  "name": "@dius/chatbot-builder",
   "version": "1.0.0",
   "description": "A smooth way to manage and maintain your chatbot definition.",
   "main": "index.js",
