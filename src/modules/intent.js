@@ -72,8 +72,10 @@ const intentModule = (function() {
       let msgObject = {};
       if (intent.conclusionStatement && intent.conclusionStatement.messages) {
         const { messages } = intent.conclusionStatement;
+        const msgContent = typeof content === 'object' ? JSON.stringify(content) : content;
+
         msgObject = {
-          content,
+          content: msgContent,
           contentType: 'PlainText',
           groupNumber: 1,
         };
@@ -124,7 +126,8 @@ const intentModule = (function() {
       }
 
       if (intent.conclusionStatement) {
-        intent.conclusionStatement.responseCard = content;
+        const cardContent = typeof content === 'object' ? JSON.stringify(content) : content;
+        intent.conclusionStatement.responseCard = cardContent;
       }
     },
 

@@ -87,7 +87,7 @@ $ yarn run test
   */
   ```
   
-- `responseMessage(content: string)`
+- `responseMessage(content: string | object)`
   Add the response to the intent to the specified group.
 
   ```js
@@ -107,7 +107,7 @@ $ yarn run test
   */
   ```
 
-- `withResponseCard(content: string)`:
+- `withResponseCard(content: string | object)`:
   Add the responseCard field to the intent
 
   ```js
