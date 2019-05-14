@@ -87,18 +87,31 @@ $ yarn run test
   */
   ```
   
-- `responseMessage(response: string, groupNumber: number)`
+- `responseMessage(content: string)`
   Add the response to the intent to the specified group.
 
   ```js
   responseMessage(`Bye! I look forward to chatting with you again soon.`)
   ```
 
-  You can chain this method with `withResponseCard(content: string)` that allows you to append the `responseCard` object to the response:
+  You can chain this method with `ofCustomType(contentType: string)` and `ofGroup(groupNumber: number)` that allows you to set `contentType` and `gourpNumber` of the message:
 
   ```js
-  responseMessage(`Bye! I look forward to chatting with you again soon.`)
-    .withResponseCard(`{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}`);
+  responseMessage(`Bye! I look forward to chatting with you again soon.`).ofCustomType('CustomLoad').ofGroup(3);
+  /* This will output the message
+  {
+    "content": "Bye! I look forward to chatting with you again soon.",
+    "contentType": "CustomPayload",
+    "groupNumber": 3
+  }
+  */
+  ```
+
+- `withResponseCard(content: string)`:
+  Add the responseCard field to the intent
+
+  ```js
+  withResponseCard(`{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[{\"title\":\"\",\"buttons\":[{\"text\":\"Book appointment\",\"value\":\"Book appointment\"},{\"text\":\"How plasma works\",\"value\":\"How plasma works\"},{\"text\":\"Who it helps\",\"value\":\"Who it helps\"},{\"text\":\"Am I eligible?\",\"value\":\"Am I eligible?\"}]}]}`);
   ```
 
 ## Resources

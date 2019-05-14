@@ -64,36 +64,68 @@ const intentModule = (function() {
       app.utterances(matchedResults);
     },
 
-    responseMessage: (response, groupNumber = 1) => {
-      if (!response) {
+    responseMessage: (content) => {
+      if (!content) {
         throw new Error('Your response can\'t be empty');
       }
 
+      let msgObject = {};
       if (intent.conclusionStatement && intent.conclusionStatement.messages) {
         const { messages } = intent.conclusionStatement;
-        const msgObject = {
+        msgObject = {
+          content,
           contentType: 'PlainText',
-          content: response,
-          groupNumber
+          groupNumber: 1,
         };
 
-        const findObj = messages.find(message => message.content === response);
+        const findObj = messages.find(message => message.content === content);
         if (!findObj) {
           messages.push(msgObject);
         }
       }
 
-      return {
-        withResponseCard: content => {
-          if (!content) {
-            throw new Error('Your responseCard can\'t be empty');
-          }
-  
-          if (intent.conclusionStatement) {
-            intent.conclusionStatement.responseCard = content;
-          }
+      const ofCustomType = contentType => {
+        if (!contentType) {
+          throw new Error('The contentType of the intent can\'t be empty');
         }
+
+        if (intent.conclusionStatement) {
+          msgObject.contentType = contentType;
+        }
+
+        return {
+          ofGroup,
+        };
       };
+
+      const ofGroup = groupNumber => {
+        if (!groupNumber || !Number.isInteger(groupNumber) || groupNumber < 0) {
+          throw new Error('The groupNumber has to be a positive integer');
+        }
+
+        if (intent.conclusionStatement) {
+          msgObject.groupNumber = groupNumber;
+        }
+
+        return {
+          ofCustomType,
+        };
+      };
+
+      return {
+        ofCustomType,
+        ofGroup,
+      };
+    },
+
+    withResponseCard: content => {
+      if (!content) {
+        throw new Error('Your responseCard can\'t be empty');
+      }
+
+      if (intent.conclusionStatement) {
+        intent.conclusionStatement.responseCard = content;
+      }
     },
 
     showMeIntent: () => {
