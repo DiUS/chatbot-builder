@@ -4,9 +4,9 @@
   "description": "A smooth way to manage and maintain your chatbot definition.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "node index.js",
-    "exchat:simulate": "node simulator.js"
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "test": "npm run lint && jest",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +14,8 @@
     "glob": "^7.1.4",
     "intent-utterance-expander": "^0.0.9",
     "jest": "^24.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
   }
 }

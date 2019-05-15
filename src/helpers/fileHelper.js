@@ -31,7 +31,7 @@ class FileHelper {
           const data = await this.readFileFromPath(file);
           this.loadedFiles.push({
             data,
-            filename: file.replace(/^.*[\\\/]/, '').split('.')[0]
+            filename: file.replace(/^.*[\\\/]/, '').split('.')[0] // eslint-disable-line
           });
 
           fileLoaded++;
@@ -45,9 +45,9 @@ class FileHelper {
   }
 
   async writeToFile(botJSON, fileDirectory, filename) {
-    const exportUrl = `${__dirname}/..${fileDirectory}`;
+    const exportUrl = `${__dirname}/..${fileDirectory}`; // eslint-disable-line
     const response = new Promise((resolve, reject) => {
-      fs.mkdir(exportUrl, { recursive: true },  async (err, data) => {
+      fs.mkdir(exportUrl, { recursive: true },  async (err) => {
         if (err) {
           reject(err);
         }
@@ -59,7 +59,7 @@ class FileHelper {
             reject(err)
           }
           
-          console.log(`${filename}_${nowTime}.json has been generated successfully!`);
+          console.log(`${filename}_${nowTime}.json has been generated successfully!`); // eslint-disable-line
           resolve(outputUrl);
         }); 
       })

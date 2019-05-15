@@ -5,10 +5,22 @@ withIntent('PlasmaDonation', () => {
     type: 'joinPreviousMessage',
     text: 'Preventing blood clots in patients with rare blood disorders.'
   }).ofCustomType('CustomPayload').ofGroup(2);
-  responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"Protecting kids against chicken pox.\"}`).ofCustomType('CustomPayload').ofGroup(2);
-  responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"Fighting against tetanus infection.\"}`).ofCustomType('CustomPayload').ofGroup(2);
-  responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"During complex heart surgery.\"}`).ofCustomType('CustomPayload').ofGroup(2);
-  responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"Treating brain disorders.\"}`).ofCustomType('CustomPayload').ofGroup(2);
+  responseMessage({
+    type: 'joinPreviousMessage',
+    text: 'Protecting kids against chicken pox.'
+  }).ofCustomType('CustomPayload').ofGroup(2);
+  responseMessage({
+    type: 'joinPreviousMessage',
+    text: 'Fighting against tetanus infection.'
+  }).ofCustomType('CustomPayload').ofGroup(2);
+  responseMessage({
+    type: 'joinPreviousMessage',
+    text: 'During complex heart surgery.'
+  }).ofCustomType('CustomPayload').ofGroup(2);
+  responseMessage({
+    type: 'joinPreviousMessage',
+    text: 'Treating brain disorders.'
+  }).ofCustomType('CustomPayload').ofGroup(2);
   responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"Helping stop critical bleeding.\"}`).ofCustomType('CustomPayload').ofGroup(3);
   responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"Protecting people with immune deficiencies.\"}`).ofCustomType('CustomPayload').ofGroup(3);
   responseMessage(`{\"type\":\"joinPreviousMessage\",\"text\":\"Treating complications from liver disease.\"}`).ofCustomType('CustomPayload').ofGroup(3);
