@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/**/*.js",
     "test": "npm run lint && jest",
+    "test:coverage": "npm run lint && jest --coverage",
     "start": "node index.js"
   },
   "author": "",

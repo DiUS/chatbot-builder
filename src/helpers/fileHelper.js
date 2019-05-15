@@ -2,18 +2,19 @@ const fs = require('fs');
 const glob = require('glob');
 
 class FileHelper {
-  constructor(config) {
-    this.config = config;
+  constructor() {
     this.loadedFiles = [];
   }
 
   readFileFromPath(filepath) {
     return new Promise((resolve, reject) => {
+      console.log('come here...'); // eslint-disable-line
       fs.readFile(`${filepath}`, 'utf8', (error, data) => {
+        console.log('data: ', data, error); // eslint-disable-line
         if (error && filepath) {
           return reject(error);
         }
-  
+
         resolve(data);
       });
     });
@@ -22,7 +23,7 @@ class FileHelper {
   loadFilesFromDirectory(directoryPath) {
     return new Promise((resolve, reject) => {
       glob(directoryPath, (err, files) => {
-        if(err) {
+        if (err) {
           reject(err);
         }
 
@@ -45,23 +46,23 @@ class FileHelper {
   }
 
   async writeToFile(botJSON, fileDirectory, filename) {
-    const exportUrl = `${__dirname}/..${fileDirectory}`; // eslint-disable-line
+    const exportUrl = `${__dirname}/..${fileDirectory}`;
     const response = new Promise((resolve, reject) => {
-      fs.mkdir(exportUrl, { recursive: true },  async (err) => {
+      fs.mkdir(exportUrl, { recursive: true }, async (err) => {
         if (err) {
           reject(err);
         }
-  
+
         const nowTime = Date.now();
         const outputUrl = `${exportUrl}/${filename}_${nowTime}.json`;
         await fs.writeFile(outputUrl, JSON.stringify(botJSON), err => {
           if (err) {
             reject(err)
           }
-          
+
           console.log(`${filename}_${nowTime}.json has been generated successfully!`); // eslint-disable-line
           resolve(outputUrl);
-        }); 
+        });
       })
     });
 

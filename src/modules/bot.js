@@ -25,10 +25,6 @@ const botModule = (function() {
       intentBuilder(bot);
       
       return bot;
-    },
-
-    showMeBot: () => {
-      return bot;
     }
   };
 

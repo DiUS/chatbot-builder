@@ -16,17 +16,9 @@ const intentModule = (function() {
         throw new Error('Intent name can\'t be empty');
       }
 
-      // TODO: It is better to load model from external
-      const intentModel = {
-        description: '',
-        name: '',
-        fulfillmentActivity: { type: 'ReturnIntent' },
-        sampleUtterances: [],
-        slots: [],
-        conclusionStatement: { messages: [] }
-      };
+      app.resetIntent();
 
-      intent = {...intentModel, name};
+      intent = {...intent, name};
 
       if (cb) {
         cb();
@@ -42,7 +34,7 @@ const intentModule = (function() {
         throw new Error('Utterance can\'t be empty');
       }
 
-      if (intent.sampleUtterances && !intent.sampleUtterances.indexOf(str) > -1) {
+      if (intent.sampleUtterances && intent.sampleUtterances.indexOf(str) <= -1) {
         intent.sampleUtterances.push(str);
       }
     },
@@ -52,14 +44,16 @@ const intentModule = (function() {
         throw new Error('Your input needs to be a valid array');
       }
 
-      if (intent.sampleUtterances) {
-        const s = new Set([...intent.sampleUtterances, ...arr]);
-        intent.sampleUtterances = [...s];
-      }
+      const s = new Set([...intent.sampleUtterances, ...arr]);
+      intent.sampleUtterances = [...s];
     },
 
     // should match the pattern in this way "(hi|hello), world!"
     utteranceWithPattern: (pattern) => {
+      if (!pattern) {
+        throw new Error('Utterance pattern can\'t be empty');
+      }
+
       const matchedResults = intentUtteranceExpander(pattern);
       app.utterances(matchedResults);
     },
@@ -70,20 +64,18 @@ const intentModule = (function() {
       }
 
       let msgObject = {};
-      if (intent.conclusionStatement && intent.conclusionStatement.messages) {
-        const { messages } = intent.conclusionStatement;
-        const msgContent = typeof content === 'object' ? JSON.stringify(content) : content;
+      const { messages } = intent.conclusionStatement;
+      const msgContent = typeof content === 'object' ? JSON.stringify(content) : content;
 
-        msgObject = {
-          content: msgContent,
-          contentType: 'PlainText',
-          groupNumber: 1,
-        };
+      msgObject = {
+        content: msgContent,
+        contentType: 'PlainText',
+        groupNumber: 1,
+      };
 
-        const findObj = messages.find(message => message.content === content);
-        if (!findObj) {
-          messages.push(msgObject);
-        }
+      const findObj = messages.find(message => message.content === content);
+      if (!findObj) {
+        messages.push(msgObject);
       }
 
       const ofCustomType = contentType => {
@@ -91,9 +83,7 @@ const intentModule = (function() {
           throw new Error('The contentType of the intent can\'t be empty');
         }
 
-        if (intent.conclusionStatement) {
-          msgObject.contentType = contentType;
-        }
+        msgObject.contentType = contentType;
 
         return {
           ofGroup,
@@ -105,9 +95,7 @@ const intentModule = (function() {
           throw new Error('The groupNumber has to be a positive integer');
         }
 
-        if (intent.conclusionStatement) {
-          msgObject.groupNumber = groupNumber;
-        }
+        msgObject.groupNumber = groupNumber;
 
         return {
           ofCustomType,
@@ -125,10 +113,19 @@ const intentModule = (function() {
         throw new Error('Your responseCard can\'t be empty');
       }
 
-      if (intent.conclusionStatement) {
-        const cardContent = typeof content === 'object' ? JSON.stringify(content) : content;
-        intent.conclusionStatement.responseCard = cardContent;
-      }
+      const cardContent = typeof content === 'object' ? JSON.stringify(content) : content;
+      intent.conclusionStatement.responseCard = cardContent;
+    },
+
+    resetIntent: () => {
+      intent = {
+        description: '',
+        name: '',
+        fulfillmentActivity: { type: 'ReturnIntent' },
+        sampleUtterances: [],
+        slots: [],
+        conclusionStatement: { messages: [] }
+      };
     },
 
     showMeIntent: () => {
