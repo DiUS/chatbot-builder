@@ -4,7 +4,7 @@ This module is core of chatbot-builder library. It is built with javascript (ES6
 
 PLEASE NOTE: This project is in a WIP status, and is not ready for production. It can be terminiated at any time, based on the decision of the team.
 
-## Installation
+## Get Started
 
 1. Install dependencies
 ```bash
