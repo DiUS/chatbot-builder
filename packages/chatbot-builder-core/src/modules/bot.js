@@ -13,7 +13,16 @@ const botModule = (function() {
       // TODO: add more fields to botModel
       const botModel = {
         name: '',
-        intents: []
+        version: '1.0',
+        intents: [],
+        slotTypes: [],
+        voiceId: '',
+        childDirected: true,
+        locale: 'en-US',
+        idleSessionTTLInSeconds: 600,
+        description: '',
+        clarificationPrompt: {},
+        abortStatement: {}  
       };
 
       bot = {...botModel, name};

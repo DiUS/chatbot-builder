@@ -6,5 +6,5 @@
   "slotsFileExtension": "*.slot.js",
   "slotsFilePrefix": "",
   "defaultChatbotName": "dius-chatbot",
-  "botDefinitionExportPath": "/../exports"
+  "botDefinitionExportPath": "./exports"
 }

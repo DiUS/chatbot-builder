@@ -1,0 +1,14 @@
+{
+  "name": "@dius/chatbot-builder-example",
+  "version": "0.1.0",
+  "description": "The example app to run chatbot-builder module",
+  "main": "index.js",
+  "scripts": {
+    "start": "chatbot-builder"
+  },
+  "dependencies": {
+    "@dius/chatbot-builder-core": "1.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
