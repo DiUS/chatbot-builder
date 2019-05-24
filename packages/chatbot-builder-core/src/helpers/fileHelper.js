@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const glob = require('glob');
+const path = require('path');
 
 class FileHelper {
   constructor() {
@@ -45,7 +46,7 @@ class FileHelper {
   }
 
   async writeToFile(botJSON, fileDirectory, filename) {
-    const exportUrl = `${__dirname}/..${fileDirectory}`;
+    const exportUrl = path.resolve('./', fileDirectory);
     const response = new Promise((resolve, reject) => {
       fs.mkdir(exportUrl, { recursive: true }, async (err) => {
         if (err || !fileDirectory || !filename) {

@@ -1,22 +1,7 @@
 {
-  "name": "@dius/chatbot-builder",
-  "version": "1.0.0",
-  "description": "A smooth way to manage and maintain your chatbot definition.",
-  "main": "index.js",
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint src/**/*.js",
-    "test": "npm run lint && jest",
-    "test:coverage": "npm run lint && jest --coverage",
-    "start": "node index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "glob": "^7.1.4",
-    "intent-utterance-expander": "^0.0.9",
-    "jest": "^24.8.0"
-  },
+  "name": "root",
+  "private": true,
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "lerna": "^3.13.4"
   }
 }
