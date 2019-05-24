@@ -49,8 +49,8 @@ $ npm run test
 
 ### Portal
 
-- [chatbot-builder-core]()
-- [chatbot-builder-example]()
+- [chatbot-builder-core](https://github.com/DiUS/chatbot-builder/tree/monorepo-refactor/packages/chatbot-builder-core)
+- [chatbot-builder-example](https://github.com/DiUS/chatbot-builder/tree/monorepo-refactor/packages/chatbot-builder-example)
 
 ## Resources
 

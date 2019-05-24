@@ -13,7 +13,7 @@
     "chatbot-builder": "bin/cli.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "glob": "^7.1.4",
     "intent-utterance-expander": "^0.0.9",
