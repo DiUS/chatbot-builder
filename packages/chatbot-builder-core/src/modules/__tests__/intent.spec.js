@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const {withIntent, utterance, utterances, utteranceWithPattern, responseMessage, withResponseCard, showMeIntent, resetIntent } = require('../intent');
+const {withIntent, utterance, utterances, utteranceWithPattern, responseMessage, responseCard, showMeIntent, resetIntent } = require('../intent');
 
 describe('Testing intentModule functions', () => {
   beforeEach(() => {
@@ -111,16 +111,84 @@ describe('Testing intentModule functions', () => {
     expect(() => responseMessage('nice').ofGroup('abc')).toThrow('The groupNumber has to be a positive integer');
   });
 
-  test('withResponseCard() should throw an error if content is not specified', () => {
-    expect(() => withResponseCard(null)).toThrow('Your responseCard can\'t be empty');
-    expect(() => withResponseCard('sample')).not.toThrow();
+  test('responseCard() should return the default value', () => {
+    const myIntent = showMeIntent();
+    responseCard();
+    const responseCardObject = JSON.parse(myIntent.conclusionStatement.responseCard);
+    expect(responseCardObject.version).toBe(1);
+    expect(responseCardObject.contentType).toBe('application/vnd.amazonaws.card.generic');
+    expect(responseCardObject.genericAttachments.length).toBe(0);
   });
 
-  test('withResponseCard() should accept both string and object as a parameter', () => {
-    expect(() => withResponseCard('I am good, thanks')).not.toThrow();
-    expect(() => withResponseCard({ 
-      version: '1.0',
-      genericAttachments: 'attachement'
-    })).not.toThrow();
+  test('responseCard() can chain with ofVersion() to set the version', () => {
+    const myIntent = showMeIntent();
+    responseCard().ofVersion(10);
+    const responseCardObject = JSON.parse(myIntent.conclusionStatement.responseCard);
+    expect(responseCardObject.version).toBe(10);
+  });
+
+  test('responseCard() can chain with ofVersion() but should throw an error if the version is not a valid possitive integer', () => {
+    expect(() => responseCard().ofVersion(-1)).toThrow('The version has to be a positive integer');
+    expect(() => responseCard().ofVersion(null)).toThrow('The version has to be a positive integer');
+    expect(() => responseCard().ofVersion('invalid')).toThrow('The version has to be a positive integer');
+  });
+
+  test('responseCard() can chain with ofContentType() to set the custom contentType of the responseCard', () => {
+    const myIntent = showMeIntent();
+    responseCard().ofContentType('my-content-type');
+    const responseCardObject = JSON.parse(myIntent.conclusionStatement.responseCard);
+    expect(responseCardObject.contentType).toBe('my-content-type');
+  });
+
+  test('responseCard() can chain with ofContentType() but should throw an error if the contentType is invalid', () => {
+    expect(() => responseCard().ofContentType(null)).toThrow('Please enter a valid contentType');
+  });
+
+  test('responseCard() can chain with withLink()', () => {
+    const myIntent = showMeIntent();
+    responseCard().withLink({
+      title: 'More info',
+      attachmentLinkUrl: 'https: //my.donateblood.com.au/app/answers/detail/a_id/10',
+      subTitle: 'faqOverseasTravelMoreInfoLinkClicked'
+    });
+    const responseCardObject = JSON.parse(myIntent.conclusionStatement.responseCard);
+    expect(responseCardObject.genericAttachments.length).toBe(1);
+    expect(responseCardObject.genericAttachments[0].title).toBe('More info');
+    expect(responseCardObject.genericAttachments[0].attachmentLinkUrl).toBe('https: //my.donateblood.com.au/app/answers/detail/a_id/10');
+    expect(responseCardObject.genericAttachments[0].subTitle).toBe('faqOverseasTravelMoreInfoLinkClicked');
+  });
+
+  test('responseCard() can chain with withLink() but should throw an error if the link object is invalid', () => {
+    expect(() => responseCard().withLink(null)).toThrow('Please enter a valid link object');
+    expect(() => responseCard().withLink({ title: 'test' })).toThrow('Please enter a valid link object');
+    expect(() => responseCard().withLink({ attachmentLinkUrl: 'http://google.com.au' })).toThrow('Please enter a valid link object');
+  });
+
+  test('responseCard() can chain with withButton(), it can accept a string as the button title. The button text and value should be the same.', () => {
+    const myIntent = showMeIntent();
+    
+    responseCard().withButton('I am the 1st button').withButton('I am the 2nd button');
+    const responseCardObject = JSON.parse(myIntent.conclusionStatement.responseCard);
+    const { buttons } = responseCardObject.genericAttachments.find(attachment => attachment.buttons);
+    expect(buttons.length).toBe(2);
+    expect(buttons[0].text).toBe('I am the 1st button');
+    expect(buttons[0].value).toBe('I am the 1st button');
+    expect(buttons[1].text).toBe('I am the 2nd button');
+    expect(buttons[1].value).toBe('I am the 2nd button');
+  });
+
+  test('responseCard() can chain with withButton(), it can accept an object with the text and value fields.', () => {
+    const myIntent = showMeIntent();
+    responseCard().withButton({ text: 'button', value: 'valid' });
+    const responseCardObject = JSON.parse(myIntent.conclusionStatement.responseCard);
+    const { buttons } = responseCardObject.genericAttachments.find(attachment => attachment.buttons);
+    expect(buttons.length).toBe(1);
+    expect(typeof buttons[0]).toBe('object');
+    expect(buttons[0].text).toBe('button');
+    expect(buttons[0].value).toBe('valid');
+  });
+
+  test('responseCard() can chain with withButton() but should throw an error if the button is invalid', () => {
+    expect(() => responseCard().withButton(null)).toThrow('Please enter a valid button name or an object with text and value fields');
   });
 });
