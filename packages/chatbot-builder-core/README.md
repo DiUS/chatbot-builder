@@ -106,12 +106,13 @@ $ yarn run test
   ```
 
 - `responseCard()`:
-  Add the responseCard field to the intent, it will generate a `responseCard` field with the default values: 
+  Add the responseCard field to the intent, it will generate a `responseCard` field with the default values:
+   
     ```js
       withResponseCard();
     ```
   
-    ```json
+    ```js
       {
         version: 1,
         contentType: 'application/vnd.amazonaws.card.generic',
