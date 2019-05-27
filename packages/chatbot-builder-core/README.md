@@ -105,11 +105,40 @@ $ yarn run test
   */
   ```
 
-- `withResponseCard(content: string | object)`:
-  Add the responseCard field to the intent
+- `responseCard()`:
+  Add the responseCard field to the intent, it will generate a `responseCard` field with the default values: 
+    ```js
+      withResponseCard();
+    ```
+  
+    ```json
+      {
+        version: 1,
+        contentType: 'application/vnd.amazonaws.card.generic',
+        genericAttachments: []
+      }
+    ```
+  
+  You can chain this method with:
+  
+  - `ofVersion(version: string)`: Set the version
+  - `ofContentType(contentType: string)`: Set the contentType
+  - `withLink(link: object)`: Insert a link attachment to `genericAttachments` field
+  - `withButton(button: string | object)`: Insert a button attachment to `genericAttachments` field
+ 
+  A comprehansive usage of `responseCard` will look like the following:
 
   ```js
-  withResponseCard(`{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[{\"title\":\"\",\"buttons\":[{\"text\":\"Book appointment\",\"value\":\"Book appointment\"},{\"text\":\"How plasma works\",\"value\":\"How plasma works\"},{\"text\":\"Who it helps\",\"value\":\"Who it helps\"},{\"text\":\"Am I eligible?\",\"value\":\"Am I eligible?\"}]}]}`);
+    responseCard()
+        .ofVersion(3.2)
+        .ofContentType('custom-type')
+        .withLink({
+          title: 'More info',
+          attachmentLinkUrl: 'https://google.com.au',
+          subTitle: 'clickForMoreInfo'
+        })
+        .withButton('What do you want?')
+        .withButton('Do you want to buy a book?');
   ```
 
 ## Resources

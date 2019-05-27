@@ -125,8 +125,8 @@ const intentModule = (function() {
       };
 
       const ofVersion = version => {
-        if (!version || !Number.isInteger(version) || version < 0) {
-          throw new Error('The version has to be a positive integer');
+        if (!version || typeof version !== 'number' || version < 0) {
+          throw new Error('The version has to be a positive number');
         }
         updateOriginalResponse('version', version);
 

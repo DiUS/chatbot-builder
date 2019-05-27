@@ -128,9 +128,9 @@ describe('Testing intentModule functions', () => {
   });
 
   test('responseCard() can chain with ofVersion() but should throw an error if the version is not a valid possitive integer', () => {
-    expect(() => responseCard().ofVersion(-1)).toThrow('The version has to be a positive integer');
-    expect(() => responseCard().ofVersion(null)).toThrow('The version has to be a positive integer');
-    expect(() => responseCard().ofVersion('invalid')).toThrow('The version has to be a positive integer');
+    expect(() => responseCard().ofVersion(-1)).toThrow('The version has to be a positive number');
+    expect(() => responseCard().ofVersion(null)).toThrow('The version has to be a positive number');
+    expect(() => responseCard().ofVersion('invalid')).toThrow('The version has to be a positive number');
   });
 
   test('responseCard() can chain with ofContentType() to set the custom contentType of the responseCard', () => {
