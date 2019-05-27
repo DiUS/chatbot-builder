@@ -108,13 +108,102 @@ const intentModule = (function() {
       };
     },
 
-    withResponseCard: content => {
-      if (!content) {
-        throw new Error('Your responseCard can\'t be empty');
-      }
+    responseCard: () => {
+      const defaultResponseCard = {
+        version: 1,
+        contentType: 'application/vnd.amazonaws.card.generic',
+        genericAttachments: []
+      };
 
-      const cardContent = typeof content === 'object' ? JSON.stringify(content) : content;
-      intent.conclusionStatement.responseCard = cardContent;
+      intent.conclusionStatement.responseCard = JSON.stringify(defaultResponseCard);
+
+      const updateOriginalResponse = (field, value) => {
+        const { responseCard } = intent.conclusionStatement;
+        const responseCardJSON = JSON.parse(responseCard);
+        responseCardJSON[field] = value;
+        intent.conclusionStatement.responseCard = JSON.stringify(responseCardJSON);
+      };
+
+      const ofVersion = version => {
+        if (!version || !Number.isInteger(version) || version < 0) {
+          throw new Error('The version has to be a positive integer');
+        }
+        updateOriginalResponse('version', version);
+
+        return {
+          ofContentType,
+          withLink,
+          withButton
+        };
+      };
+
+      const ofContentType = contentType => {
+        if (!contentType) {
+          throw new Error('Please enter a valid contentType');
+        }
+        updateOriginalResponse('contentType', contentType);
+
+        return {
+          ofVersion,
+          withLink,
+          withButton
+        }
+      };
+
+      const withLink = link => {
+        if (!link || !link.title || !link.attachmentLinkUrl) {
+          throw new Error('Please enter a valid link object');
+        }
+
+        const { responseCard } = intent.conclusionStatement;
+        const responseCardJSON = JSON.parse(responseCard);
+        responseCardJSON.genericAttachments.push(link);
+        intent.conclusionStatement.responseCard = JSON.stringify(responseCardJSON);
+
+        return {
+          ofContentType,
+          ofVersion,
+          withLink,
+          withButton
+        };
+      };
+
+      const withButton = button => {
+        if (!button) {
+          throw new Error('Please enter a valid button name or an object with text and value fields');
+        }
+
+        const { responseCard } = intent.conclusionStatement;
+        const responseCardJSON = JSON.parse(responseCard);
+
+        let hasButtons = responseCardJSON.genericAttachments.find(attachment => attachment.buttons)
+        if (!hasButtons) {
+          responseCardJSON.genericAttachments.push({ buttons: [] });
+        }
+        
+        const { buttons } = responseCardJSON.genericAttachments.find(attachment => attachment.buttons);
+        if (typeof button === 'string') {
+          buttons.push({ text: button, value: button });
+        } else if (typeof button === 'object') {
+          buttons.push(button);
+        }
+        
+        intent.conclusionStatement.responseCard = JSON.stringify(responseCardJSON);
+
+        return {
+          ofContentType,
+          ofVersion,
+          withLink,
+          withButton
+        };
+      };
+
+      return {
+        ofVersion,
+        ofContentType,
+        withLink,
+        withButton
+      }
     },
 
     resetIntent: () => {

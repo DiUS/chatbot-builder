@@ -91,6 +91,7 @@ describe('Testing fileHelper functions', () => {
   test('writeToFile() should reject the response if filepath is invalid', async () => {
     const fileHelper = new FileHelper();
     await expect(fileHelper.writeToFile(undefined, '/', 'abc')).rejects.toBeDefined();
-    await expect(fileHelper.writeToFile({ data: 'test' }, undefined, undefined)).rejects.toBeDefined();
+    await expect(fileHelper.writeToFile({ data: 'test' }, undefined, 'blah')).rejects.toBeDefined();
+    await expect(fileHelper.writeToFile({ data: 'test' }, '/', undefined)).rejects.toBeDefined();
   });
 });

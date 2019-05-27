@@ -1,5 +1,5 @@
 const vm = require('vm');
-const { withIntent, utterance, utterances, utteranceWithPattern, responseMessage, withResponseCard } = require('../modules').intentModule;
+const { withIntent, utterance, utterances, utteranceWithPattern, responseMessage, responseCard } = require('../modules').intentModule;
 const FileHelper = require('../helpers/fileHelper');
 const configuration = require('../config');
 
@@ -11,18 +11,18 @@ const runBuild = async () => {
   const intentFilesDirectory = `${config.intentsPath}/${config.intentsFileExtension}`; 
   const intentsData = await fileHelper.loadFilesFromDirectory(intentFilesDirectory);
 
+  /* This code requires to set up node.js vm runtime sandbox */
+  const sandbox = {
+    withIntent,
+    utterance,
+    utterances,
+    utteranceWithPattern,
+    responseMessage,
+    responseCard
+  };
+
   for (let intentData of intentsData) {
     const { data } = intentData;
-
-    /* This code requires to set up node.js vm runtime sandbox */
-    const sandbox = {
-      withIntent,
-      utterance,
-      utterances,
-      utteranceWithPattern,
-      responseMessage,
-      withResponseCard
-    };
     
     try {
       const intentScript = new vm.Script(data);
