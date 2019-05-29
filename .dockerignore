@@ -1,0 +1,6 @@
+node_modules
+.eslintrc.js
+.gitignore
+.DS_Store
+exports
+coverage
