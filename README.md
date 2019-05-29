@@ -6,7 +6,7 @@ The original idea is from [@sergei-matheson](https://github.com/sergei-matheson)
 
 PLEASE NOTE: This project is in a WIP status, and is not ready for production. It can be terminiated at any time, based on the decision of the team.
 
-### Getting Started
+## Getting Started
 
 1. Install lerna CLI 
 ```bash
@@ -17,7 +17,7 @@ $ npm i -g lerna
 $ lerna bootstrap
 ```
 
-#### Run the code
+## Run the code
 
 ```bash
 $ lerna run start
@@ -31,7 +31,7 @@ $ chatbot-builder
 
 ![alt text](https://s3-ap-southeast-2.amazonaws.com/mattyao-github-assets/chatbot-builder-cli.gif "chatbot-builder-cli")
 
-#### Test
+## Test
 
 ```bash
 $ lerna run test
@@ -47,7 +47,15 @@ Alternatively, you can manually go to each module and run test in the traditiona
 $ npm run test
 ```
 
-### Portal
+## With Docker
+
+You can run this project in the [Docker](https://www.docker.com/) container with the volume mapping, so the exports files will be synced to your local drive from the Docker host:
+
+```bash
+docker run -v [YOUR_LOCAL_DRIVE]:/usr/chatbot-builder/packages/chatbot-builder-example/exports dius/chatbot-builder
+```
+
+## Portal
 
 - [chatbot-builder-core](https://github.com/DiUS/chatbot-builder/tree/monorepo-refactor/packages/chatbot-builder-core)
 - [chatbot-builder-example](https://github.com/DiUS/chatbot-builder/tree/monorepo-refactor/packages/chatbot-builder-example)
